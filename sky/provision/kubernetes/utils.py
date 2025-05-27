@@ -574,6 +574,7 @@ def detect_gpu_label_formatter(
                         lf.get_accelerator_from_label_value(value)
                     except ValueError:
                         break
+                    label_formatter = lf()
                     return label_formatter, node_labels
 
     return label_formatter, node_labels
