@@ -194,6 +194,11 @@ def _list_accelerators(
                 allocated_qty = 0
                 accelerator_name = lf.get_accelerator_from_label_value(
                     node.metadata.labels.get(key))
+                
+                # Skip if the accelerator name is an empty string
+                # (or other falsy value for that matter)
+                if not accelerator_name:
+                    continue
 
                 # Exclude multi-host TPUs from being processed.
                 # TODO(Doyoung): Remove the logic when adding support for
