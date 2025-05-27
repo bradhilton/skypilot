@@ -568,9 +568,12 @@ def detect_gpu_label_formatter(
     # Check if the node labels contain any of the GPU label prefixes
     for lf in LABEL_FORMATTER_REGISTRY:
         for _, label_list in node_labels.items():
-            for label, _ in label_list:
+            for label, value in label_list:
                 if lf.match_label_key(label):
-                    label_formatter = lf()
+                    try:
+                        lf.get_accelerator_from_label_value(value)
+                    except ValueError:
+                        break
                     return label_formatter, node_labels
 
     return label_formatter, node_labels
